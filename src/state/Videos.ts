@@ -1,8 +1,17 @@
 import { atom } from "recoil";
+import { IVideo } from "../interfaces/Video";
 
-export const VideosAtom = atom({
+interface VideosAtom {
+  videos: IVideo[];
+  nextPage: string;
+  search: string;
+}
+
+export const VideosAtom = atom<VideosAtom>({
   key: "videos",
   default: {
-    videos: []
+    videos: [],
+    nextPage: "",
+    search: ""
   }
 })
