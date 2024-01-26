@@ -29,10 +29,7 @@ const VideoList: FC<IVideoListProps> = (props) => {
           { videos.map((v, i) => (
             <Video
             key={i}
-            channelTitle={v.snippet.channelTitle}
-            title={v.snippet.title}
-            publishedAt={v.snippet.publishedAt}
-            thumbnails={v.snippet.thumbnails}
+            video={{...v.snippet, id: v.id.videoId}}
             /> 
             )) }
         </SimpleGrid>

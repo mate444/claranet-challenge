@@ -1,5 +1,6 @@
 export interface IVideoSnippet {
   channelTitle: string;
+  id: string;
   thumbnails: {
     medium: {
       url: string;
