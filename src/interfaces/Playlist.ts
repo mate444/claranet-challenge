@@ -1,7 +1,7 @@
-import { IVideoSnippet } from "./Video";
+import { IVideo } from "./Video";
 
 export interface IPlaylist {
   title: string;
   id: number;
-  videos: IVideoSnippet[];
+  videos: IVideo[];
 }

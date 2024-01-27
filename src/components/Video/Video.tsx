@@ -9,13 +9,13 @@ import {
   useDisclosure
  } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
-import { IVideoSnippet } from "../../interfaces/Video";
+import { IVideo } from "../../interfaces/Video";
 import { getTimeSince } from "../../utils/GetTimeSince"
 import he from "he";
 import AddVideoModal from "../AddVideoModal/AddVideoModal";
 
-const Video: FC<{ video: IVideoSnippet }> = (props) => {
-  const { title, thumbnails, channelTitle, publishedAt } = props.video;
+const Video: FC<{ video: IVideo }> = (props) => {
+  const { snippet: { title, thumbnails, channelTitle, publishedAt } } = props.video;
   const { isOpen, onClose, onOpen } = useDisclosure();
   const fixedTitle = he.decode((title.length >= 80 ? `${title.substring(0, 80)}...` : title));
   return (

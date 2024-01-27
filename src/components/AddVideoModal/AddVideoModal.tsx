@@ -14,13 +14,13 @@ import {
 import { Link as ReactLink } from "react-router-dom";
 import { PlaylistsAtom } from "../../state/Playlist";
 import { useRecoilValue } from "recoil";
-import { IVideoSnippet } from "../../interfaces/Video";
+import { IVideo } from "../../interfaces/Video";
 import { useAddVideo } from "../../hooks/useAddVideo";
 
 interface IAddVideoModalProps {
   isOpen: boolean;
   onClose: () => void;
-  video: IVideoSnippet
+  video: IVideo
 }
 
 const AddVideoModal: FC<IAddVideoModalProps> = (props) => {
@@ -64,7 +64,7 @@ const AddVideoModal: FC<IAddVideoModalProps> = (props) => {
                 _hover={{ bgColor: "lightgray" }}
                 onClick={() => handleVideoAdd(p.id)}>
                 <Heading size={"sm"}> {p.title} </Heading>
-                <Text>{p.videos.length > 1 ? `${p.videos.length} videos` : `1 video`}</Text>
+                <Text>{p.videos.length === 1 ? `1 video` : `${p.videos.length} videos`}</Text>
               </Flex>
             ))
           }

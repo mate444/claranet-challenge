@@ -1,16 +1,16 @@
 import { useSetRecoilState } from "recoil";
 import { PlaylistsAtom } from "../state/Playlist";
-import { IVideoSnippet } from "../interfaces/Video";
+import { IVideo } from "../interfaces/Video";
 
 // Aggiungi un video ad una playlist specifica
 export const useAddVideo = () => {
   const setPlaylistVideos = useSetRecoilState(PlaylistsAtom);
-  return (video: IVideoSnippet, playlistId: number) => {
+  return (video: IVideo, playlistId: number) => {
     setPlaylistVideos((oldState) => {
-      let existingVideo: IVideoSnippet | undefined;
+      let existingVideo: IVideo | undefined;
       const newVideo = oldState.playlists.map((p) =>  {
         if (p.id === playlistId) {
-          existingVideo = p.videos.find((v) => v.id === video.id);
+          existingVideo = p.videos.find((v) => v.id.videoId === video.id.videoId);
           return {
             ...p,
             videos: p.videos.concat([video])

@@ -1,25 +1,18 @@
 import { FC } from "react";
-import { useRecoilValue } from "recoil";
-import { VideosAtom } from "../../state/Videos";
 import { Flex, SimpleGrid, Button } from "@chakra-ui/react";
 import Loader from "../Loader/Loader";
 import Video from "../Video/Video";
-import useSearch from "../../hooks/useSearch";
+import { IVideo } from "../../interfaces/Video";
 
 interface  IVideoListProps {
-  isLoading: boolean;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  isLoading?: boolean;
+  setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+  videos: IVideo[];
+  onLoad?: () => void;
 }
 
 const VideoList: FC<IVideoListProps> = (props) => {
-  const { videos, nextPage, search } = useRecoilValue(VideosAtom);
-  const fetchSearch = useSearch();
-  const handleSearch = () => {
-    props.setIsLoading(true);
-    fetchSearch(search, nextPage).then(() => {
-      props.setIsLoading(false);
-    });
-  }
+  const { videos } = props;
   return (
     <Flex flexDir={"column"}>
       { (!props.isLoading || videos.length > 0) &&
@@ -29,12 +22,12 @@ const VideoList: FC<IVideoListProps> = (props) => {
           { videos.map((v, i) => (
             <Video
             key={i}
-            video={{...v.snippet, id: v.id.videoId}}
+            video={v}
             /> 
             )) }
         </SimpleGrid>
       }
-      { videos.length > 0 &&
+      { videos.length > 0 && props.onLoad !== undefined &&
       <Button
         w={"50%"}
         m={"auto"}
@@ -42,7 +35,7 @@ const VideoList: FC<IVideoListProps> = (props) => {
         borderRadius={20}
         bgColor={"rgba(131, 0, 0, 0.5)"}
         _hover={{ bgColor: "rgba(131, 0, 0, 0.5)" }}
-        onClick={handleSearch}>
+        onClick={props.onLoad}>
         Carica più video
       </Button> }
       { props.isLoading && <Loader /> }
