@@ -49,7 +49,7 @@ const AddVideoModal: FC<IAddVideoModalProps> = (props) => {
           <ModalCloseButton />
           <Flex
             flexDir={"column"}
-            overflowY={"scroll"}
+            overflowY={"auto"}
             mt={"40px"}
             py={"5px"}>
           {
@@ -81,7 +81,6 @@ const AddVideoModal: FC<IAddVideoModalProps> = (props) => {
             Crea una nuova <Link color={"blue"} to="/profile" as={ReactLink}>qui</Link>
             </Heading>
             </ModalFooter>
-              
         </>
       }
       </ModalContent>
