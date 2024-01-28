@@ -1,8 +1,7 @@
-import { FC, useState, useRef } from "react";
-import { 
-  Editable,
-  EditablePreview,
-  EditableInput,
+import { FC, useState } from "react";
+import {
+  useDisclosure,
+  Button,
   Flex,
   Heading,
   IconButton,
@@ -10,6 +9,14 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Modal,
+  ModalBody,
+  ModalContent,
+  Input,
+  ModalOverlay,
+  ModalHeader,
+  ModalCloseButton,
+  ModalFooter,
 } from "@chakra-ui/react";
 import { HamburgerIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { IPlaylist } from "../../interfaces/Playlist";
@@ -24,16 +31,13 @@ interface IPlaylistProps {
 }
 
 const Playlist: FC<IPlaylistProps> = (props) => {
-  const [editMode, setEditMode] = useState<boolean>(false);
   const { playlist: { id, title }, selected, handleSelected, index, deletePlaylist, editPlaylistTitle } = props;
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [newTitle, setNewTitle] = useState<string>(title);
-  const inputRef = useRef<null | HTMLInputElement>(null);
-  const handleEditMode = () => {
-    setEditMode(true)
-    console.log(inputRef.current?.focus())
-    inputRef.current && inputRef.current.focus();
+  const handleEditTitle = () => {
+    editPlaylistTitle(newTitle, id);
+    onClose();
   }
-  
   return (
     <Flex
       p={"10px"}
@@ -47,30 +51,13 @@ const Playlist: FC<IPlaylistProps> = (props) => {
       bgColor={selected === index ? `lightgray` : `white`}
       onClick={() => handleSelected(index, props.playlist)}
       overflow={"hidden"}>
-      {
-        !editMode ?
         <Heading
           fontWeight={"500"}
           size={"md"}
           textOverflow={"ellipsis"}
           overflow={"hidden"}
           whiteSpace={"nowrap"}> {title}
-        </Heading> :
-        <Editable defaultValue={newTitle} onChange={(e) => setNewTitle(e)}>
-          <EditablePreview as={Heading}
-          fontWeight={"500"}
-          size={"md"}
-          textOverflow={"ellipsis"}
-          overflow={"hidden"}
-          whiteSpace={"nowrap"}/>
-          <EditableInput
-           ref={inputRef}
-           onBlur={() => { 
-            editPlaylistTitle(newTitle, id);
-            setEditMode(false)}}
-            />
-        </Editable>
-      }
+        </Heading>
         { 
           selected === index &&
           <Menu>
@@ -85,11 +72,27 @@ const Playlist: FC<IPlaylistProps> = (props) => {
               _hover={{ bgColor: "inherit" }}>
             </MenuButton>
             <MenuList>
-              <MenuItem icon={<EditIcon />} onClick={handleEditMode}> Cambia nome </MenuItem>
+              <MenuItem icon={<EditIcon />} onClick={onOpen}> Cambia nome </MenuItem>
               <MenuItem icon={<DeleteIcon />} onClick={() => deletePlaylist(id)}> Elimina </MenuItem>
             </MenuList>
           </Menu>
         }
+        <Modal isCentered  isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader> Edita playlist </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Input
+                onBlur={handleEditTitle}
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}/>
+            </ModalBody>
+            <ModalFooter>
+              <Button onClick={handleEditTitle}>Edita</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
     </Flex>
   );
 }

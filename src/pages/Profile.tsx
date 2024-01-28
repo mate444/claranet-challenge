@@ -16,10 +16,21 @@ const Profile: FC = () => {
           p={"100px"}
           w={"100%"}
           m={"50px 100px 50px 100px"}>
+          <Center mb={"30px"}>
+            <Heading>{currentPlaylist.title}</Heading>
+          </Center>
           <VideoList videos={currentPlaylist.videos}/>
-          </Box> : <Center w={"100%"}>
+          </Box> : <Box
+          p={"100px"}
+          w={"100%"}
+          m={"50px 100px 50px 100px"}>
+            <Center>
+            <Heading>{currentPlaylist.title}</Heading>
+            </Center>
+            <Center pt={"30px"} w={"100%"}>
             <Heading> Nessun Video </Heading>
-          </Center> : null
+          </Center>
+          </Box> : null
       }
       {
         !currentPlaylist && playlists.length && <Center w={"100%"}> <Heading>Seleziona una playlist</Heading> </Center>

@@ -37,7 +37,8 @@ export const useSetPlaylist = () => {
       localStorage.setItem("playlists", JSON.stringify(filteredPlaylists));
       return {
         ...oldState,
-        playlists: filteredPlaylists
+        playlists: filteredPlaylists,
+        currentPlaylist: null
       }
     });
   }
@@ -45,18 +46,22 @@ export const useSetPlaylist = () => {
   const editPlaylistTitle = (newTitle: string, id: number) => {
     if (!newTitle.length) return;
     setRecoilState((oldState) => {
+      let editedCurrentPlaylist: IPlaylist = { id, videos: [], title: "" };
       const editedPlaylist = oldState.playlists.map((p) => {
         if (p.id === id) {
-          return {
+          const editedPlaylistTitle = {
             ...p,
             title: newTitle
           }
+          editedCurrentPlaylist = editedPlaylistTitle;
+          return editedPlaylistTitle;
         } else return p;
       })
       localStorage.setItem("playlists", JSON.stringify(editedPlaylist));
       return {
         ...oldState,
-        playlists: editedPlaylist
+        playlists: editedPlaylist,
+        currentPlaylist: editedCurrentPlaylist
       }
     });
   }

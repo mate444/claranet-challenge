@@ -8,7 +8,7 @@ import {
   IconButton,
   useDisclosure
  } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
+import { HamburgerIcon } from "@chakra-ui/icons";
 import { IVideo } from "../../interfaces/Video";
 import { getTimeSince } from "../../utils/GetTimeSince"
 import he from "he";
@@ -43,7 +43,7 @@ const Video: FC<{ video: IVideo }> = (props) => {
         </GridItem>
         <GridItem rowStart={3}>
           <Text> {channelTitle} </Text>
-          <Text> {getTimeSince(new Date(publishedAt))} </Text>
+          <Text> publicato {getTimeSince(new Date(publishedAt))} </Text>
         </GridItem>
         <GridItem
           colStart={2}
@@ -55,7 +55,7 @@ const Video: FC<{ video: IVideo }> = (props) => {
               _hover={{ bgColor: "#FFFFFF" }}
               fontSize={"1em"}
               onClick={onOpen}
-              icon={<AddIcon />}/>
+              icon={<HamburgerIcon />}/>
         </GridItem>
       </Grid>
       <AddVideoModal isOpen={isOpen} onClose={onClose} video={props.video}/>
