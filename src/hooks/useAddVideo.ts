@@ -31,6 +31,7 @@ export const useAddVideo = () => {
           return p;
         }
       });
+      localStorage.setItem("playlists", JSON.stringify(newVideo))
       return {
         ...oldState,
         playlists: newVideo,

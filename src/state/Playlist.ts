@@ -9,7 +9,7 @@ interface PlaylistsAtom {
 export const PlaylistsAtom = atom<PlaylistsAtom>({
   key: "playlists",
   default: {
-    playlists: [],
+    playlists: JSON.parse(localStorage.getItem("playlists") || `[]`),
     currentPlaylist: null
   }
 });
