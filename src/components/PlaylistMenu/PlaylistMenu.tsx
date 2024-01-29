@@ -2,15 +2,21 @@ import { FC, useState } from "react";
 import { PlaylistsAtom } from "../../state/Playlist";
 import { useRecoilValue } from "recoil";
 import {
-    Flex,
-    Heading,
-    Button,
-    useDisclosure,
-  } from "@chakra-ui/react";
+  Flex,
+  useDisclosure,
+  Drawer,
+  DrawerOverlay,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  IconButton
+} from "@chakra-ui/react";
 import { IPlaylist } from "../../interfaces/Playlist";
 import { useSetPlaylist } from "../../hooks/useSetPlaylist";
 import CreatePlaylistModal from "../CreatePlaylistModal/CreatePlaylistModal";
 import Playlist from "../Playlist/Playlist";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 const PlaylistMenu: FC = () => {
   const { playlists } = useRecoilValue(PlaylistsAtom);
@@ -27,12 +33,28 @@ const PlaylistMenu: FC = () => {
     deletePlaylist(id);
   }
   return (
-    <Flex
-      m={"20px"}
-      p={"10px"}
-      flexDir={"column"}
-      w={"200px"}>
-      <Heading size={"2xl"} m={"30px 0px 50px 0px"} alignSelf={"center"}> Playlists </Heading>
+    <>
+    <IconButton
+      icon={<HamburgerIcon />}
+      aria-label="OpenPlaylistMenu"
+      onClick={onOpen}
+      borderRadius={20}
+      my={"30px"}
+      mx={"10px"}
+      maxW={"8vw"}
+      size={"lg"}
+      bgColor={"rgba(131, 0, 0, 0.5)"}
+      _hover={{ bgColor: "rgba(131, 0, 0, 0.5)" }}>Playlists</IconButton>
+    <Drawer
+    size={"xs"}
+    isOpen={isOpen}
+    onClose={onClose}
+    placement="left">
+    <DrawerOverlay />
+    <DrawerContent>
+    <DrawerCloseButton />
+    <DrawerHeader> Playlists </DrawerHeader>
+    <DrawerBody>
       <Flex flexDir={"column"} overflow={"auto"}>
         {
           playlists.length > 0 && playlists.map((p, i) => (
@@ -47,19 +69,13 @@ const PlaylistMenu: FC = () => {
               />
           ))
         }
-      </Flex>
-      <Button
-        onClick={onOpen}
-        borderRadius={20}
-        my={"30px"}
-        w={"100px"}
-        alignSelf={"center"}
-        bgColor={"rgba(131, 0, 0, 0.5)"}
-        _hover={{ bgColor: "rgba(131, 0, 0, 0.5)" }}>
-          Crea
-      </Button>
-      <CreatePlaylistModal isOpen={isOpen} onClose={onClose}/>
     </Flex>
+    <CreatePlaylistModal />
+    </DrawerBody>
+    </DrawerContent>
+  </Drawer>    
+    
+    </>
   );
 }
 

@@ -9,28 +9,36 @@ import {
   Input,
   ModalCloseButton,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  useDisclosure
 } from "@chakra-ui/react";
 
-interface ICreatePlaylistModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const CreatePlaylistModal: FC<ICreatePlaylistModalProps> = (props) => {
+const CreatePlaylistModal: FC = () => {
   const { createPlaylist } = useSetPlaylist();
   const [title, setTitle] = useState("Nuova Playlist");
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   }
   const handleCreate = () => {
     createPlaylist(title)
-    props.onClose();
+    onClose();
   }
   return (
+    <>
+    <Button
+        onClick={onOpen}
+        borderRadius={20}
+        my={"30px"}
+        w={"100px"}
+        alignSelf={"center"}
+        bgColor={"rgba(131, 0, 0, 0.5)"}
+        _hover={{ bgColor: "rgba(131, 0, 0, 0.5)" }}>
+          Crea
+      </Button>
     <Modal
-      onClose={props.onClose}
-      isOpen={props.isOpen}
+      onClose={onClose}
+      isOpen={isOpen}
       size={"md"}
       isCentered>
       <ModalOverlay />
@@ -55,6 +63,7 @@ const CreatePlaylistModal: FC<ICreatePlaylistModalProps> = (props) => {
       </ModalFooter>
       </ModalContent>
     </Modal>
+    </>
   );
 }
 
