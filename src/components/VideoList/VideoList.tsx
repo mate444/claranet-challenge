@@ -2,17 +2,18 @@ import { FC } from "react";
 import { Flex, SimpleGrid, Button } from "@chakra-ui/react";
 import Loader from "../Loader/Loader";
 import Video from "../Video/Video";
-import { IVideo } from "../../interfaces/Video";
+import { IVideo, VideoType } from "../../interfaces/Video";
 
 interface  IVideoListProps {
   isLoading?: boolean;
   setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
   videos: IVideo[];
   onLoad?: () => void;
+  type: VideoType;
 }
 
 const VideoList: FC<IVideoListProps> = (props) => {
-  const { videos } = props;
+  const { videos, type } = props;
   return (
     <Flex flexDir={"column"}>
       { (!props.isLoading || videos.length > 0) &&
@@ -21,6 +22,7 @@ const VideoList: FC<IVideoListProps> = (props) => {
         spacing={"30px"}>
           { videos.map((v, i) => (
             <Video
+            type={type}
             key={i}
             video={v}
             /> 

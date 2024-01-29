@@ -25,7 +25,7 @@ const NavBar: FC = () => {
           >
           Home
         </Link>
-        <Text fontSize={["2.5rem","3rem"]}>
+        <Text mx={2} fontSize={["2.5rem","3rem"]}>
           |
         </Text>
         <Link

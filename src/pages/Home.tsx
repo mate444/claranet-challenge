@@ -5,6 +5,7 @@ import { VideosAtom } from "../state/Videos";
 import useSearch from "../hooks/useSearch"
 import SearchBar from "../components/SearchBar/SearchBar";
 import VideoList from "../components/VideoList/VideoList";
+import { VideoType } from "../interfaces/Video";
 const Home: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { videos, nextPage, search } = useRecoilValue(VideosAtom);
@@ -19,6 +20,7 @@ const Home: FC = () => {
     <Center flexDir={"column"} gap={40}>
     <SearchBar setIsLoading={setIsLoading}/>
     <VideoList
+      type={VideoType.Home}
       onLoad={handleLoad}
       videos={videos}
       isLoading={isLoading}

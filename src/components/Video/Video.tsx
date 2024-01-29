@@ -8,13 +8,14 @@ import {
   IconButton,
   useDisclosure
  } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
-import { IVideo } from "../../interfaces/Video";
+import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
+import { IVideo, VideoType } from "../../interfaces/Video";
 import { getTimeSince } from "../../utils/GetTimeSince"
 import he from "he";
 import AddVideoModal from "../AddVideoModal/AddVideoModal";
+import RemoveVideoAlert from "../RemoveVideoModal/RemoveVideoAlert";
 
-const Video: FC<{ video: IVideo }> = (props) => {
+const Video: FC<{ video: IVideo, type: VideoType, playlistId?:number }> = (props) => {
   const { snippet: { title, thumbnails, channelTitle, publishedAt } } = props.video;
   const { isOpen, onClose, onOpen } = useDisclosure();
   const fixedTitle = he.decode((title.length >= 80 ? `${title.substring(0, 80)}...` : title));
@@ -54,10 +55,14 @@ const Video: FC<{ video: IVideo }> = (props) => {
               _hover={{ bgColor: "#FFFFFF" }}
               fontSize={"1em"}
               onClick={onOpen}
-              icon={<HamburgerIcon />}/>
+              icon={props.type === VideoType.Home ? <AddIcon /> : <DeleteIcon />}/>
         </GridItem>
       </Grid>
-      <AddVideoModal isOpen={isOpen} onClose={onClose} video={props.video}/>
+      {
+       props.type === VideoType.Home ?
+        <AddVideoModal isOpen={isOpen} onClose={onClose} video={props.video}/> :
+        <RemoveVideoAlert isOpen={isOpen} onClose={onClose} video={props.video}/>
+      }
     </>
   )
 }

@@ -9,6 +9,11 @@ export interface IVideoSnippet {
   publishedAt: string;
 }
 
+export enum VideoType {
+  Profile,
+  Home
+}
+
 export interface IVideo {
   etag: string;
   kind: string;
