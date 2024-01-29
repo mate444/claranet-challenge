@@ -30,8 +30,7 @@ const Video: FC<{ video: IVideo }> = (props) => {
           colSpan={2}>
           <Image
             borderRadius={15}
-            src={thumbnails.medium.url}
-            gridRow={""}/>
+            src={thumbnails.medium.url}/>
         </GridItem>
         <GridItem
           rowStart={2}

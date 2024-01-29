@@ -37,8 +37,8 @@ const AddVideoModal: FC<IAddVideoModalProps> = (props) => {
       isCentered>
       <ModalOverlay />
       <ModalContent
-        py={"40px"}
-        px={"80px"}
+        py={"4vh"}
+        px={"4vw"}
         >
       {
         playlists.length > 0 ?
