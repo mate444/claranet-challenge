@@ -15,7 +15,7 @@ import { Link as ReactLink } from "react-router-dom";
 import { PlaylistsAtom } from "../../state/Playlist";
 import { useRecoilValue } from "recoil";
 import { IVideo } from "../../interfaces/Video";
-import { useAddVideo } from "../../hooks/useAddVideo";
+import { useAddVideo } from "../../hooks/useSetVideo";
 
 interface IAddVideoModalProps {
   isOpen: boolean;
@@ -25,9 +25,9 @@ interface IAddVideoModalProps {
 
 const AddVideoModal: FC<IAddVideoModalProps> = (props) => {
   const { playlists } = useRecoilValue(PlaylistsAtom);
-  const addVideo = useAddVideo();
+  const { addVideoToPlaylist } = useAddVideo();
   const handleVideoAdd = (playlistId: number) => {
-    addVideo(props.video, playlistId)
+    addVideoToPlaylist(props.video, playlistId)
   };
   return (
     <Modal
