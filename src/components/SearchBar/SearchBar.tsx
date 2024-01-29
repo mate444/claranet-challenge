@@ -21,13 +21,14 @@ const SearchBar: FC<ISearchBarProps> = (props) => {
   return (
     <Flex
       alignItems={"center"}
-      mt={"5rem"}>
+      mt={"5rem"}
+      width={["55vw", "45vw", "45vw", "30vw"]}>
     <Input
       borderLeftRadius={"20px"}
       borderRightRadius={"0px"}
       bgColor={"#D9D9D9"}
       border={"0px"}
-      w={"500px"}
+      h={"50px"}
       placeholder={"Cerca video"}
       onKeyDown={(e) => {
         if (e.key === "Enter") handleSearch();
@@ -35,6 +36,7 @@ const SearchBar: FC<ISearchBarProps> = (props) => {
     <Button
       borderLeftRadius={"0px"}
       borderRightRadius={"20px"}
+      h={"50px"}
       bgColor={"#D9D9D9"}
       _hover={{ bg: "#D9D9D9" }}
       onClick={handleSearch}>

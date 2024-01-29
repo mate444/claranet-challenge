@@ -17,7 +17,7 @@ const VideoList: FC<IVideoListProps> = (props) => {
     <Flex flexDir={"column"}>
       { (!props.isLoading || videos.length > 0) &&
         <SimpleGrid
-        columns={3}
+        columns={[1, 1, 2, 3, 3, 4]}
         spacing={"30px"}>
           { videos.map((v, i) => (
             <Video

@@ -2,33 +2,27 @@ import { FC } from "react";
 import { useRecoilValue } from "recoil";
 import { Box, Center, Flex, Heading } from "@chakra-ui/react";
 import { PlaylistsAtom } from "../state/Playlist";
-import PlaylistMenu from "../components/PlaylistMenu/PlaylistMenu";
 import VideoList from "../components/VideoList/VideoList";
 
 const Profile: FC = () => {
   const { currentPlaylist, playlists } = useRecoilValue(PlaylistsAtom);
-  console.log(currentPlaylist)
   return (
     <Flex w={"100%"}>
-      <PlaylistMenu />
+      
       {
-        currentPlaylist ? currentPlaylist.videos.length > 0 ? <Box
-          p={"100px"}
-          w={"100%"}
-          m={"50px 100px 50px 100px"}>
-          <Center mb={"30px"}>
+        currentPlaylist ? currentPlaylist .videos.length > 0 ? <Box w={"100%"}>
+          <Center my={"30px"}>
             <Heading>{currentPlaylist.title}</Heading>
           </Center>
+          <Center py={"10px"}>
           <VideoList videos={currentPlaylist.videos}/>
-          </Box> : <Box
-          p={"100px"}
-          w={"100%"}
-          m={"50px 100px 50px 100px"}>
+          </Center>
+          </Box> : <Box w={"100%"}>
             <Center>
-            <Heading>{currentPlaylist.title}</Heading>
+              <Heading my={"30px"}>{currentPlaylist.title}</Heading>
             </Center>
             <Center pt={"30px"} w={"100%"}>
-            <Heading> Nessun Video </Heading>
+              <Heading> Nessun Video </Heading>
           </Center>
           </Box> : null
       }
