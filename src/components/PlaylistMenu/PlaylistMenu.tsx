@@ -40,8 +40,8 @@ const PlaylistMenu: FC = () => {
       mx={"10px"}
       maxW={"8vw"}
       size={"lg"}
-      bgColor={"rgba(131, 0, 0, 0.5)"}
-      _hover={{ bgColor: "rgba(131, 0, 0, 0.5)" }}>Playlists</IconButton>
+      bgColor={"rgba(131, 0, 0, 0)"}
+      _hover={{ bgColor: "rgba(131, 0, 0, 0)" }}>Playlists</IconButton>
     <Drawer
     size={"xs"}
     isOpen={isOpen}
