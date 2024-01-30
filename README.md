@@ -32,6 +32,6 @@ Per eseguire il progetto in locale, segui questi passaggi:
    npm run dev
    ```
    Questo avvierà il server di sviluppo.
-5. Sei pronto per iniziare! Visita `http://localhost:3000` nel tuo browser.
+5. Sei pronto per iniziare! controlla il terminale per ottenere l'indirizzo.
 
 Sentiti libero di esplorare l'applicazione, cercare video, creare playlist e sperimentare la funzionalità fornita dalle tecnologie menzionate sopra.
