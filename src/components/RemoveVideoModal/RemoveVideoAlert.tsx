@@ -7,7 +7,8 @@ import {
   IconButton,
   AlertDialogFooter,
   AlertDialogBody,
-  AlertDialogHeader
+  AlertDialogHeader,
+  useToast
 } from "@chakra-ui/react";
 import { IVideo } from "../../interfaces/Video";
 import { useAddVideo } from "../../hooks/useSetVideo";
@@ -20,7 +21,7 @@ interface IRemoveVideoAlertProps {
 }
 
 const RemoveVideoAlert: FC<IRemoveVideoAlertProps> = (props) => {
-  const { removeVideoFromPlaylist } = useAddVideo();
+  const { removeVideoFromPlaylist } = useAddVideo(useToast());
   const cancelRef = useRef(null)
   const handleVideoRemoval = () => {
     removeVideoFromPlaylist(props.video);

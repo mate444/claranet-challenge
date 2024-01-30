@@ -10,11 +10,12 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
-  useDisclosure
+  useDisclosure,
+  useToast
 } from "@chakra-ui/react";
 
 const CreatePlaylistModal: FC = () => {
-  const { createPlaylist } = useSetPlaylist();
+  const { createPlaylist } = useSetPlaylist(useToast());
   const [title, setTitle] = useState("Nuova Playlist");
   const { isOpen, onClose, onOpen } = useDisclosure();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
