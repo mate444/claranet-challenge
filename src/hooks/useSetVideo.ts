@@ -2,9 +2,10 @@ import { useSetRecoilState } from "recoil";
 import { PlaylistsAtom } from "../state/Playlist";
 import { IVideo } from "../interfaces/Video";
 import { IPlaylist } from "../interfaces/Playlist";
+import { UseToastOptions } from "@chakra-ui/react";
 
 // Aggiungi un video ad una playlist specifica
-export const useAddVideo = () => {
+export const useAddVideo = (toast: (args: UseToastOptions) => void) => {
   const setPlaylistVideos = useSetRecoilState(PlaylistsAtom);
   const addVideoToPlaylist = (video: IVideo, playlistId: number) => {
     setPlaylistVideos((oldState) => {
@@ -15,6 +16,11 @@ export const useAddVideo = () => {
           const existingVideoIndex = p.videos.findIndex((v) => v.id.videoId === video.id.videoId);
           if (existingVideoIndex === -1) {
             currentPlaylist = {...p, videos: [...p.videos, video]}
+            toast({
+              title: "Video aggiunto alla playlist",
+              status: "success",
+              duration: 2000
+            });
             return {
               ...p,
               videos: [...p.videos, video],
@@ -26,6 +32,11 @@ export const useAddVideo = () => {
             }
             updatedPlaylist.videos.splice(existingVideoIndex, 1);
             currentPlaylist = updatedPlaylist;
+            toast({
+              title: "Video rimosso dalla playlist",
+              status: "warning",
+              duration: 2000
+            });
             return updatedPlaylist;
           }
         } else {
@@ -53,9 +64,14 @@ export const useAddVideo = () => {
           }
           currentPlaylist = removedVideo
           return removedVideo
-        } else return p
+        } else return p;
       });
       localStorage.setItem("playlists", JSON.stringify(updatedPlaylists));
+      toast({
+        title: "Video rimosso dalla playlist",
+        status: "warning",
+        duration: 2000
+      });
       return {
         ...oldState,
         playlists: updatedPlaylists,
