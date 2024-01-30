@@ -9,7 +9,8 @@ import {
   Text,
   Link,
   ModalFooter,
-  ModalBody
+  ModalBody,
+  useToast
 } from "@chakra-ui/react";
 import { Link as ReactLink } from "react-router-dom";
 import { PlaylistsAtom } from "../../state/Playlist";
@@ -25,7 +26,7 @@ interface IAddVideoModalProps {
 
 const AddVideoModal: FC<IAddVideoModalProps> = (props) => {
   const { playlists } = useRecoilValue(PlaylistsAtom);
-  const { addVideoToPlaylist } = useAddVideo();
+  const { addVideoToPlaylist } = useAddVideo(useToast());
   const handleVideoAdd = (playlistId: number) => {
     addVideoToPlaylist(props.video, playlistId)
   };

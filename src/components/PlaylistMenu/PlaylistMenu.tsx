@@ -10,7 +10,8 @@ import {
   DrawerCloseButton,
   DrawerContent,
   DrawerHeader,
-  IconButton
+  IconButton,
+  useToast
 } from "@chakra-ui/react";
 import { IPlaylist } from "../../interfaces/Playlist";
 import { useSetPlaylist } from "../../hooks/useSetPlaylist";
@@ -21,17 +22,13 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 const PlaylistMenu: FC = () => {
   const { playlists } = useRecoilValue(PlaylistsAtom);
   const [selected, setSelected] = useState<number | null>(null);
-  const { setCurrentPlaylist, deletePlaylist, editPlaylistTitle } = useSetPlaylist();
+  const { setCurrentPlaylist, editPlaylistTitle } = useSetPlaylist(useToast());
   const { isOpen, onClose, onOpen } = useDisclosure();
   const handleSelected = (index: number, playlist: IPlaylist) => {
     setSelected(index);
     setCurrentPlaylist(playlist);
   }
-  const handleDeletePlaylist = (id: number) => {
-    setSelected(null);
-    setCurrentPlaylist(null);
-    deletePlaylist(id);
-  }
+
   return (
     <>
     <IconButton
@@ -64,7 +61,7 @@ const PlaylistMenu: FC = () => {
               handleSelected={handleSelected}
               selected={selected}
               index={i}
-              deletePlaylist={handleDeletePlaylist}
+              setSelected={setSelected}
               editPlaylistTitle={editPlaylistTitle}
               />
           ))

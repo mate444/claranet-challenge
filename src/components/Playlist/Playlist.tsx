@@ -17,26 +17,37 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalFooter,
+  useToast
 } from "@chakra-ui/react";
 import { HamburgerIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { IPlaylist } from "../../interfaces/Playlist";
+import { useSetPlaylist } from "../../hooks/useSetPlaylist";
 
 interface IPlaylistProps {
   playlist: IPlaylist;
   selected: number | null;
   index: number;
   handleSelected: (index: number, playlist: IPlaylist) => void;
-  deletePlaylist: (id: number) => void;
+  setSelected: (index: number | null) => void;
   editPlaylistTitle: (newTitle: string, id: number) => void;
 }
 
 const Playlist: FC<IPlaylistProps> = (props) => {
-  const { playlist: { id, title }, selected, handleSelected, index, deletePlaylist, editPlaylistTitle } = props;
+  const { setCurrentPlaylist, deletePlaylist } = useSetPlaylist(useToast());
+  const { playlist: { id, title }, selected, handleSelected, setSelected, index, editPlaylistTitle } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [newTitle, setNewTitle] = useState<string>(title);
   const handleEditTitle = () => {
-    editPlaylistTitle(newTitle, id);
+    if (newTitle !== title) {
+      editPlaylistTitle(newTitle, id);
+    }
     onClose();
+  }
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+    e.stopPropagation();
+    setSelected(null);
+    setCurrentPlaylist(null);
+    deletePlaylist(id)
   }
   return (
     <Flex
@@ -49,8 +60,9 @@ const Playlist: FC<IPlaylistProps> = (props) => {
       borderRadius={10}
       _hover={{ bgColor: "lightgray", cursor: "pointer" }}
       bgColor={selected === index ? `lightgray` : `white`}
+      overflow={"hidden"}
       onClick={() => handleSelected(index, props.playlist)}
-      overflow={"hidden"}>
+      >
         <Heading
           fontWeight={"500"}
           size={"md"}
@@ -69,22 +81,24 @@ const Playlist: FC<IPlaylistProps> = (props) => {
               bgColor={"inherit"}
               transition={"0s"}
               alignSelf={"center"}
-              _hover={{ bgColor: "inherit" }}>
+              _hover={{ bgColor: "inherit" }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}>
             </MenuButton>
             <MenuList>
               <MenuItem icon={<EditIcon />} onClick={onOpen}> Cambia nome </MenuItem>
-              <MenuItem icon={<DeleteIcon />} onClick={() => deletePlaylist(id)}> Elimina </MenuItem>
+              <MenuItem icon={<DeleteIcon />} onClick={(e) => handleDelete(e, id)}> Elimina </MenuItem>
             </MenuList>
           </Menu>
         }
-        <Modal isCentered  isOpen={isOpen} onClose={onClose}>
+        <Modal isCentered  isOpen={isOpen} onClose={handleEditTitle}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader> Edita playlist </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
               <Input
-                onBlur={handleEditTitle}
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}/>
             </ModalBody>

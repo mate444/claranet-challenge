@@ -9,9 +9,8 @@ const Profile: FC = () => {
   const { currentPlaylist, playlists } = useRecoilValue(PlaylistsAtom);
   return (
     <Flex w={"100%"}>
-      
       {
-        currentPlaylist ? currentPlaylist .videos.length > 0 ? <Box w={"100%"}>
+        currentPlaylist ? currentPlaylist.videos.length > 0 ? <Box w={"100%"}>
           <Center my={"30px"}>
             <Heading>{currentPlaylist.title}</Heading>
           </Center>
@@ -28,7 +27,10 @@ const Profile: FC = () => {
           </Box> : null
       }
       {
-        !currentPlaylist && playlists.length && <Center w={"100%"}> <Heading>Seleziona una playlist</Heading> </Center>
+        !currentPlaylist && !!playlists.length && <Center w={"100%"}> <Heading>Seleziona una playlist</Heading> </Center>
+      }
+      {
+        !playlists.length &&  <Center w={"100%"}> <Heading>Nessuna playlist ancora</Heading> </Center>
       }
     </Flex>
   )
